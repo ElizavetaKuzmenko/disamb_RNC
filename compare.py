@@ -23,7 +23,7 @@ attrs['voice'] = ['act', 'pass']
 attrs['aform'] = ['brev', 'plen']
 attrs['clevel'] = ['supr', 'comp']
 
-#res = codecs.open('result.csv', 'w', 'utf-8')
+res = codecs.open('result.csv', 'w', 'utf-8')
 attrs_line = u''
 for attr in attrs.keys():
     for a in attrs[attr]:
@@ -75,64 +75,64 @@ for x in range(len(arr_freel[:302327])):
         else:
             gr_mystem.append(i)
     if gr_freel[0] == gr_mystem[0]:
-        diff_POS = 'Yes'
+        diff_POS = '1'
     else:
-        diff_POS = 'No'
+        diff_POS = '0'
     if w_mystem == arr_freel[x][1]:
-        diff_lemma = 'Yes'
+        diff_lemma = '1'
     else:
         print w_mystem, arr_freel[x][1]
         print x
-        diff_lemma = 'No'
+        diff_lemma = '0'
     if set(gr_freel) != set(gr_mystem):
     #if gr_freel[0] != gr_mystem[0]:
         if 'A-NUM' in gr_mystem and ('A-NUM' in gr_freel or 'NUM' in gr_freel):
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'NUM' in gr_freel and 'ciph' in gr_mystem:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'PARENTH' in gr_mystem and 'ADV' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'ADV-PRO' in gr_mystem and 'PRO' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'PRAEDIC-PRO' in gr_mystem and 'PRAEDIC' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'dat2' in gr_mystem and 'dat' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'acc2' in gr_mystem and 'acc' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif 'loc2' in gr_mystem and 'loc' in gr_freel:
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif (('inan' in gr_freel or 'anim' in gr_freel) and ('inan' not in gr_mystem or 'anim' not in gr_mystem)) or (('inan' in gr_mystem or 'anim' in gr_mystem) and ('inan' not in gr_freel or 'anim' not in gr_freel)):
-            diff_tag = 'Yes'
+            diff_tag = '1'
         elif ('1p' in gr_mystem or '2p' in gr_mystem or '3p' in gr_mystem) and ('1p' not in gr_freel or '2p' not in gr_freel or '3p' not in gr_freel):
-            diff_tag = 'Yes'
+            diff_tag = '1'
         else:
-            diff_tag = 'No'
+            diff_tag = '0'
     else:
-        diff_tag = 'Yes'
+        diff_tag = '1'
         #print arr_mystem[x][0], arr_mystem[x][1], gr_mystem[0], gr_freel[0], arr_freel[3]
     r = arr_mystem[x][0] + '\t' + arr_mystem[x][1] + '\t' + arr_freel[x][1] + '\t' + diff_lemma + '\t' + gr_mystem[0] + '\t' + gr_freel[0] + '\t' + diff_POS + '\t' + ','.join(gr_mystem) + '\t' + ','.join(gr_freel) + '\t' + arr_freel[x][3] + '\t' + diff_tag + '\t'
     for attr in attrs.keys():
         if len(set(attrs[attr]) & set(gr_mystem)) > 0:
             for v in attrs[attr]:
                 if v in gr_freel and v in gr_mystem:
-                    r += 'Yes\tYes\t'
+                    r += '0\t1\t'
                 elif v in gr_freel and v not in gr_mystem:
-                    r += 'Yes\tNo\t'
+                    r += '1\t0\t'
                 elif v not in gr_freel and v in gr_mystem:
-                    r += 'No\tNo\t'
+                    r += '0\t0\t'
                 elif v not in gr_freel and v not in gr_mystem:
-                    r += 'No\tYes\t'
+                    r += '0\t1\t'
         else:
             for v in attrs[attr]:
                 r += 'NA\tNA\t'
 
     r = r[:-1] + '\n'
     #res.write(r)
-            #res.write(arr_freel[x][0] + '\t' + arr_freel[x][1] + '\t' + ','.join(gr_freel) + '\t' + w_mystem + '\t' + arr_mystem[x][0] + '\t' + ','.join(gr_mystem) + '\n')
-            #print arr_freel[x][1], gr_freel, arr_freel[x][0], w_mystem, gr_mystem, arr_mystem[x][0]
+    res.write(arr_freel[x][0] + '\t' + arr_freel[x][1] + '\t' + ','.join(gr_freel) + '\t' + w_mystem + '\t' + arr_mystem[x][0] + '\t' + ','.join(gr_mystem) + '\n')
+    print arr_freel[x][1], gr_freel, arr_freel[x][0], w_mystem, gr_mystem, arr_mystem[x][0]
             #n += 1
-#res.close()
+res.close()
         #n = 0
         #len_gr = len(gr_freel)
         #for y in gr_freel:
